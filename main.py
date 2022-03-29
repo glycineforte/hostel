@@ -44,11 +44,11 @@ def reg_name(message):
     bot.send_message(message.from_user.id, 'Напишите Номер комнаты')
     bot.register_next_step_handler(message, reg_room)
 
-    id = message.from_user.id
+    '''id = message.from_user.id
     username = message.from_user.username
     db_object.execute("INSERT INTO users (id, username, name, room, type, message) VALUES (%s, %s, %s, %s, %s)",
                       (id, username, name, 0, 0, 0))
-    db_connection.commit()
+    db_connection.commit()'''
 
 def reg_room(message):
     global room
@@ -87,11 +87,11 @@ def reg_problem(message):
     problem = message.text
     bot.send_message(message.from_user.id, 'Заявка принята')
 
-    id = message.from_user.id
+    '''id = message.from_user.id
     username = message.from_user.username
     db_object.execute("INSERT INTO users (id, username, name, room, type, message) VALUES (%s, %s, %s, %s, %s)",
                       (id, username, name, room, 0, problem))
-    db_connection.commit()
+    db_connection.commit()'''
 
 '''@app.route('/' + TOKEN, methods=['POST'])
 def get_message():
