@@ -46,6 +46,7 @@ def reg_name(message):
     bot.register_next_step_handler(message, reg_room)
 
     db_object.execute(f"UPDATE users SET name = '{name}' WHERE id = '{id}';")
+    db_connection.commit()
 
 def reg_room(message):
     global room
@@ -58,6 +59,7 @@ def reg_room(message):
 
 
     db_object.execute(f"UPDATE users SET room = '{room}' WHERE id = '{id}';")
+    db_connection.commit()
 
     keyboard = types.InlineKeyboardMarkup()
     key_plumber = types.InlineKeyboardButton(text='Сантехник', callback_data='plumber')
@@ -77,12 +79,14 @@ def callback_worker(call):
         bot.register_next_step_handler(call.message, reg_problem)
 
         db_object.execute(f"UPDATE users SET type = '{'Сантехник'}' WHERE id = '{id}';")
+        db_connection.commit()
 
     if call.data == "carpenter":
         bot.send_message(call.message.chat.id, "Опишите проблему")
         bot.register_next_step_handler(call.message, reg_problem)
 
         db_object.execute(f"UPDATE users SET type = '{'Плотник'}' WHERE id = '{id}';")
+        db_connection.commit()
 
 
     elif call.data == "provider":
@@ -90,6 +94,7 @@ def callback_worker(call):
         bot.register_next_step_handler(call.message, reg_problem)
 
         db_object.execute(f"UPDATE users SET type = '{'Провайдер'}' WHERE id = '{id}';")
+        db_connection.commit()
 
 def reg_problem(message):
     global problem
@@ -97,6 +102,7 @@ def reg_problem(message):
     bot.send_message(message.from_user.id, 'Заявка принята')
 
     db_object.execute(f"UPDATE users SET message = '{problem}' WHERE id = '{id}';")
+    db_connection.commit()
 
     '''id = message.from_user.id
     username = message.from_user.username
