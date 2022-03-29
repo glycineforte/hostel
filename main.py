@@ -1,7 +1,7 @@
 from flask import message_flashed
 import telebot
 from telebot import types
-import psycopg2
+#import psycopg2
 import os
 from flask import Flask, request
 
