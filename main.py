@@ -20,7 +20,6 @@ db_object = db_connection.cursor()
 
 bot = telebot.TeleBot(TOKEN)
 
-
 @bot.message_handler(commands=['start', 'help'])
 def send_welcome(message):
     bot.send_message(message.from_user.id, 'Напишите Имя')
