@@ -55,6 +55,8 @@ def reg_room(message):
         except Exception:
             bot.send_message(message.from_user.id, "Вводите цифрами!")
 
+    db_object.execute(f"UPDATE users SET room = '{room}' WHERE id = '{id}';")
+
     keyboard = types.InlineKeyboardMarkup()
     key_plumber = types.InlineKeyboardButton(text='Сантехник', callback_data='plumber')
     keyboard.add(key_plumber)
@@ -71,17 +73,28 @@ def callback_worker(call):
     if call.data == "plumber":
         bot.send_message(call.message.chat.id, "Опишите проблему")
         bot.register_next_step_handler(call.message, reg_problem)
+
+        db_object.execute(f"UPDATE users SET type = '{'Сантехник'}' WHERE id = '{id}';")
+
     if call.data == "carpenter":
         bot.send_message(call.message.chat.id, "Опишите проблему")
         bot.register_next_step_handler(call.message, reg_problem)
+
+        db_object.execute(f"UPDATE users SET type = '{'Плотник'}' WHERE id = '{id}';")
+
+
     elif call.data == "provider":
         bot.send_message(call.message.chat.id, "Опишите проблему")
         bot.register_next_step_handler(call.message, reg_problem)
+
+        db_object.execute(f"UPDATE users SET type = '{'Провайдер'}' WHERE id = '{id}';")
 
 def reg_problem(message):
     global problem
     problem = message.text
     bot.send_message(message.from_user.id, 'Заявка принята')
+
+    db_object.execute(f"UPDATE users SET message = '{problem}' WHERE id = '{id}';")
 
     '''id = message.from_user.id
     username = message.from_user.username
