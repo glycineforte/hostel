@@ -29,12 +29,15 @@ def send_welcome(message):
     id = message.from_user.id
     username = message.from_user.username
 
-    #db_object.execute(f"SELECT id FROM users WHERE id = {id}")
-    #result = db_object.fetchone()
+    db_object.execute(f"SELECT id FROM users WHERE id = {id}")
+    result = db_object.fetchone()
 
-    #if not result:
-    db_object.execute("INSERT INTO users (id, usersname, name, room, type, message) VALUES (%s, %s, %s, %s, %s, %s)", (id, username, 0, 0, 0, 0))
-    db_connection.commit()
+    if not result:
+        db_object.execute("INSERT INTO users (id, usersname, name, room, type, message) VALUES (%s, %s, %s, %s, %s, %s)",
+                          (id, username, 0, 0, 0, 0))
+        db_connection.commit()
+
+
 
 def reg_name(message):
     global name
