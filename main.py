@@ -25,6 +25,7 @@ def send_welcome(message):
     bot.send_message(message.from_user.id, 'Напишите Имя')
     bot.register_next_step_handler(message, reg_name)
 
+    global id
     id = message.from_user.id
     username = message.from_user.username
 
@@ -43,7 +44,6 @@ def reg_name(message):
     bot.send_message(message.from_user.id, 'Напишите Номер комнаты')
     bot.register_next_step_handler(message, reg_room)
 
-    id = message.from_user.id
     db_object.execute(f"UPDATE users SET name = '{name}' WHERE id = '{id}';")
 
 def reg_room(message):
@@ -54,6 +54,7 @@ def reg_room(message):
             room = int(message.text)
         except Exception:
             bot.send_message(message.from_user.id, "Вводите цифрами!")
+
 
     db_object.execute(f"UPDATE users SET room = '{room}' WHERE id = '{id}';")
 
