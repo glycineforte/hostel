@@ -2,9 +2,9 @@
 import telebot
 from telebot import types
 #import psycopg2
-import os
-from flask import Flask, request
-from gevent.pywsgi import WSGIServer
+#import os
+#from flask import Flask, request
+#from gevent.pywsgi import WSGIServer
 
 name = ''
 room = ''
