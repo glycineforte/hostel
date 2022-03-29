@@ -12,7 +12,7 @@ problem = ''
 username = ''
 TOKEN = '5270219842:AAG8kGXwlksrezWfFQ7AEK44gklFlROolf0'
 APP_URL = f'https://hostelsservices.herokuapp.com/{TOKEN}'
-app = Flask(__name__)
+#app = Flask(__name__)
 
 
 #DB_URI = "postgres://kpumtmzgycvnoa:11b1f4fa4fe4bcc98362bfc36060febf46e25a2c9f8e68cbcd18e177611bb6e2@ec2-99-80-170-190.eu-west-1.compute.amazonaws.com:5432/d7pom1og4i8cb3"
@@ -80,7 +80,7 @@ def reg_problem(message):
     problem = message.text
     bot.send_message(message.from_user.id, 'Заявка принята')
 
-@app.route('/' + TOKEN, methods=['POST'])
+'''@app.route('/' + TOKEN, methods=['POST'])
 def get_message():
     json_string = request.get_data().decode('utf-8')
     update = telebot.types.Update.de_json(json_string)
@@ -96,6 +96,6 @@ def webhook():
 if __name__ == '__main__':
     #server.run(host='0.0.0.0', port=int(os.environ.get('PORT', 5000)))
     http_server = WSGIServer(('', 5000), app)
-    http_server.serve_forever()
+    http_server.serve_forever()'''
 
 bot.infinity_polling()
