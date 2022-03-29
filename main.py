@@ -1,7 +1,7 @@
 #from flask import message_flashed
 import telebot
 from telebot import types
-#import psycopg2
+import psycopg2
 #import os
 #from flask import Flask, request
 #from gevent.pywsgi import WSGIServer
@@ -9,15 +9,14 @@ from telebot import types
 name = ''
 room = ''
 problem = ''
-username = ''
+
 TOKEN = '5270219842:AAG8kGXwlksrezWfFQ7AEK44gklFlROolf0'
 APP_URL = f'https://hostelsservices.herokuapp.com/{TOKEN}'
 #app = Flask(__name__)
+DB_URI = 'postgres://vcsfzjeelgbqiq:fa77e98fb086e104bd4a7d50ef77b94d491f5ac0baaa7842f3f4470aab6d4bf3@ec2-99-80-170-190.eu-west-1.compute.amazonaws.com:5432/d8hrne25p5ad4q'
 
-
-#DB_URI = "postgres://kpumtmzgycvnoa:11b1f4fa4fe4bcc98362bfc36060febf46e25a2c9f8e68cbcd18e177611bb6e2@ec2-99-80-170-190.eu-west-1.compute.amazonaws.com:5432/d7pom1og4i8cb3"
-#db_connection = psycopg2.connect(DB_URI, sslmode="require")
-#db_object = db_connection.cursor()
+db_connection = psycopg2.connect(DB_URI, sslmode="require")
+db_object = db_connection.cursor()
 
 bot = telebot.TeleBot(TOKEN)
 
@@ -27,16 +26,16 @@ def send_welcome(message):
     bot.send_message(message.from_user.id, 'Напишите Имя')
     bot.register_next_step_handler(message, reg_name)
 
-    ''''id = message.from_user.id
+    id = message.from_user.id
     username = message.from_user.username
 
     db_object.execute(f"SELECT id FROM users WHERE id = {id}")
     result = db_object.fetchone()
 
     if not result:
-        db_object.execute("INSERT INTO users (id, username, room, message, name) VALUES (%s, %s, %s, %s, %s)",
-                          (id, username, 0, 0, 0))
-        db_connection.commit()'''''
+        db_object.execute("INSERT INTO users (id, username, name, room, type, message) VALUES (%s, %s, %s, %s, %s)",
+                          (id, username, 0, 0, 0, 0))
+        db_connection.commit()
 
 
 def reg_name(message):
@@ -44,6 +43,12 @@ def reg_name(message):
     name = message.text
     bot.send_message(message.from_user.id, 'Напишите Номер комнаты')
     bot.register_next_step_handler(message, reg_room)
+
+    id = message.from_user.id
+    username = message.from_user.username
+    db_object.execute("INSERT INTO users (id, username, name, room, type, message) VALUES (%s, %s, %s, %s, %s)",
+                      (id, username, name, 0, 0, 0))
+    db_connection.commit()
 
 def reg_room(message):
     global room
@@ -63,6 +68,8 @@ def reg_room(message):
     keyboard.add(key_provider)
     bot.send_message(message.from_user.id, name + ', выберите услугу:', reply_markup=keyboard)
 
+
+
 @bot.callback_query_handler(func=lambda call: True)
 def callback_worker(call):
     if call.data == "plumber":
@@ -79,6 +86,12 @@ def reg_problem(message):
     global problem
     problem = message.text
     bot.send_message(message.from_user.id, 'Заявка принята')
+
+    id = message.from_user.id
+    username = message.from_user.username
+    db_object.execute("INSERT INTO users (id, username, name, room, type, message) VALUES (%s, %s, %s, %s, %s)",
+                      (id, username, name, room, 0, problem))
+    db_connection.commit()
 
 '''@app.route('/' + TOKEN, methods=['POST'])
 def get_message():
