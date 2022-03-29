@@ -32,7 +32,7 @@ def send_welcome(message):
     result = db_object.fetchone()
 
     if not result:
-        db_object.execute("INSERT INTO users (id, usersname, name, room, type, message) VALUES (%s, %s, %s, %s, %s)",
+        db_object.execute("INSERT INTO users (id, usersname, name, room, type, message) VALUES (%s, %s, %s, %s, %s, %s)",
                           (id, username, 0, 0, 0, 0))
         db_connection.commit()
 
