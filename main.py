@@ -28,13 +28,13 @@ def send_welcome(message):
     id = message.from_user.id
     username = message.from_user.username
 
-    db_object.execute(f"SELECT id FROM users WHERE id = {id}")
+    '''db_object.execute(f"SELECT id FROM users WHERE id = {id}")
     result = db_object.fetchone()
 
-    if not result:
-        db_object.execute("INSERT INTO users (id, usersname, name, room, type, message) VALUES (%s, %s, %s, %s, %s, %s)",
+    if not result:'''
+    db_object.execute("INSERT INTO users (id, usersname, name, room, type, message) VALUES (%s, %s, %s, %s, %s, %s)",
                           (id, username, 0, 0, 0, 0))
-        db_connection.commit()
+    db_connection.commit()
 
 
 def reg_name(message):
@@ -43,7 +43,8 @@ def reg_name(message):
     bot.send_message(message.from_user.id, 'Напишите Номер комнаты')
     bot.register_next_step_handler(message, reg_room)
 
-    db_object.execute(f"UPDATE users SET name = '{name}'")
+    id = message.from_user.id
+    db_object.execute(f"UPDATE users SET name = '{name}' WHERE id = {id}")
 
 def reg_room(message):
     global room
