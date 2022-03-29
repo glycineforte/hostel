@@ -18,7 +18,7 @@ server = Flask(__name__)
 #db_connection = psycopg2.connect(DB_URI, sslmode="require")
 #db_object = db_connection.cursor()
 
-bot = telebot.TeleBot()
+bot = telebot.TeleBot(TOKEN)
 
 
 @bot.message_handler(commands=['start', 'help'])
