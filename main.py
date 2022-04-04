@@ -104,11 +104,6 @@ def reg_problem(message):
     db_object.execute(f"UPDATE users SET message = '{problem}' WHERE id = '{id}';")
     db_connection.commit()
 
-    '''id = message.from_user.id
-    username = message.from_user.username
-    db_object.execute("INSERT INTO users (id, username, name, room, type, message) VALUES (%s, %s, %s, %s, %s)",
-                      (id, username, name, room, 0, problem))
-    db_connection.commit()'''
 
 '''@app.route('/' + TOKEN, methods=['POST'])
 def get_message():
