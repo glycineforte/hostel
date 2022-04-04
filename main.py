@@ -13,7 +13,7 @@ problem = ''
 TOKEN = '5270219842:AAG8kGXwlksrezWfFQ7AEK44gklFlROolf0'
 APP_URL = f'https://hostelsservices.herokuapp.com/{TOKEN}'
 #app = Flask(__name__)
-DB_URI = 'postgres://vcsfzjeelgbqiq:fa77e98fb086e104bd4a7d50ef77b94d491f5ac0baaa7842f3f4470aab6d4bf3@ec2-99-80-170-190.eu-west-1.compute.amazonaws.com:5432/d8hrne25p5ad4q'
+DB_URI = 'postgres://iehhfwgdwknoic:598e9af534ea9047fcdd496a97f0c35a8b2ce2bb9da8f72c4be72d5897a90a0f@ec2-176-34-211-0.eu-west-1.compute.amazonaws.com:5432/d4ce89bq7rae1k'
 
 db_connection = psycopg2.connect(DB_URI, sslmode="require")
 db_object = db_connection.cursor()
