@@ -2,6 +2,8 @@
 import telebot
 from telebot import types
 import psycopg2
+from aiogram.dispatcher.filters import Command
+from aiogram.types import Message
 #import os
 #from flask import Flask, request
 #from gevent.pywsgi import WSGIServer
@@ -9,6 +11,7 @@ import psycopg2
 name = ''
 room = ''
 problem = ''
+admin_id = 764597745;
 
 TOKEN = '5270219842:AAG8kGXwlksrezWfFQ7AEK44gklFlROolf0'
 APP_URL = f'https://hostelsservices.herokuapp.com/{TOKEN}'
@@ -104,6 +107,16 @@ def reg_problem(message):
     db_object.execute(f"UPDATE users SET message = '{problem}' WHERE id = '{id}';")
     db_connection.commit()
 
+@bot.message_handler(Command('sendall'))
+async def send_all(message: Message):
+    if message.chat.id == admin_id:
+        await message.answer('Start')
+        for i in db_object.users.id:
+            await bot.send_message(i, message.text[message.text.find(' '):])
+
+        await message.answer('Done')
+    else:
+        await message.answer('Error')
 
 '''@app.route('/' + TOKEN, methods=['POST'])
 def get_message():
